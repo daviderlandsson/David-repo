@@ -1,0 +1,27 @@
+name: Deploy B2B DEV
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Show environment
+        run: |
+          echo "User: $(whoami)"
+          echo "Host: $(hostname)"
+
+      - name: Verify source
+        run: test -d /opt/retailsync/b2b-app
+
+      - name: Create target
+        run: mkdir -p /opt/retailsync-dev/b2b-app
+
+      - name: Deploy
+        run: |
+          cp -r /opt/retailsync/b2b-app/. /opt/retailsync-dev/b2b-app/
+
+      - name: Done
+        run: echo "B2B deployed"
